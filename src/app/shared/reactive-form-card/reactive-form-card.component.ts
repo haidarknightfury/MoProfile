@@ -1,3 +1,4 @@
+import { formEntryAnimation } from './../animation.shared';
 import { FieldMetadata } from './../model/common.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
@@ -5,7 +6,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-reactive-form-card',
   templateUrl: './reactive-form-card.component.html',
-  styleUrls: ['./reactive-form-card.component.css']
+  styleUrls: ['./reactive-form-card.component.css'],
+  animations: [formEntryAnimation]
 })
 export class ReactiveFormCardComponent implements OnInit {
 

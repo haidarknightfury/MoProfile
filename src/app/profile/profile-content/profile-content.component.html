@@ -10,12 +10,16 @@
 
     <app-reactive-form-card class="m-1" 
        [heading]="'Work details'"
-       [fields]="personalFields"
-       [subsection]="personal"
+       [fields]="workFields"
+       [subsection]="work"
        (onSave)="saveProfile($event)">
     </app-reactive-form-card>
 
 
-    <button class="btn btn-primary" type="button" (click)="saveProfile($event)">Save</button>
-
+    <div class="button-group col-md-6 border p-2 m-2">
+      <button class="btn btn-primary mx-1" type="button" (click)="saveProfile($event)">Save</button>
+      <button class="btn btn-warning mx-1" type="button">Cancel</button>
+      <button class="btn btn-info mx-1" type="button">Exit</button>
+    </div>
+   
 </form>
