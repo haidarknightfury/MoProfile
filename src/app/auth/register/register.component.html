@@ -1,0 +1,39 @@
+<div [@formState] class="row login">
+
+    <div class="col-md-12 form-container mt-1">
+        <div class="heading mt-2">
+            <h4>Create a new account</h4>
+        </div>
+        <div class="border rounded shadow card col-md-6">
+            <div class="illustrations col-md-4">
+                <img src="assets/illustrations/register.svg" alt="login illustrations">
+            </div>
+
+            <div class="login-form col-md-8">
+                <form #registerForm ="ngForm" (ngSubmit)="register()">
+                                
+                    <div class="form-group">
+                        <label for="txtFname">First name</label>
+                        <input type="email" name="txtFname" id="txtFname" class="form-control" ngModel>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtEmail">Email address</label>
+                        <input type="email" name="txtEmail" id="txtEmail" class="form-control" ngModel>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPassword">Password</label>
+                        <input type="password" name="txtPassword" id="txtPassword" class="form-control" ngModel>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary rounded mx-1">Save</button>
+                        <button type="button" class="btn btn-info rounded mx-1" routerLink="/auth/login" > Login </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
