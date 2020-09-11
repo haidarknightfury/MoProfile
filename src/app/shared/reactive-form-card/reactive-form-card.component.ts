@@ -1,4 +1,4 @@
-import { FieldMetadata } from './../../profile/profile-personal/profile-personal.component';
+import { FieldMetadata } from './../model/common.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -9,52 +9,35 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class ReactiveFormCardComponent implements OnInit {
 
-  @Input('fields')
-  public fieldsMetas: FieldMetadata[] = [];
+  @Input('heading')
+  public subsectionHeading: string
 
-  @Output()
-  public onSave:EventEmitter<void> = new EventEmitter();
+  @Input('subsection')
+  public subsection: FormGroup;
+
+  @Input('fields')
+  public fields: FieldMetadata[];
+
+  @Output() public onSave = new EventEmitter<any>();
 
   constructor() {}
 
-  personal: FormGroup;
-
   ngOnInit(): void {
-    this.fieldsMetas = this.createFieldsMetas();
-    const createdFields = this.createFields(this.fieldsMetas);
-    this.personal = new FormGroup(createdFields);
+    console.log(`received fields:  `+ this.fields)
+    const createdFields = this.createFields(this.fields);
+    this.subsection = new FormGroup(createdFields);
+
   }
 
   saveChanges() {
-    this.onSave.emit(this.personal.value);
-  }
-
-  createFieldsMetas(): FieldMetadata[] {
-    let emailFieldMetadata: FieldMetadata = {
-      name: 'email',
-      defaultValue: '',
-      id: 'txtEmail',
-      label: 'Email address',
-      type: 'email',
-      validators: [Validators.required, Validators.email],
-    };
-
-    let fNameFieldMetadata: FieldMetadata = {
-      name: 'firstName',
-      defaultValue: '',
-      id: 'txtFName',
-      label: 'First name',
-      type: 'text',
-      validators: [Validators.required],
-    };
-    return [emailFieldMetadata, fNameFieldMetadata];
+    console.log(`${JSON.stringify(this.subsection.value)}`)
+    this.onSave.emit(this.subsection.value);
   }
 
   createFormControl(fieldMetadata: FieldMetadata): any {
     return {
       [fieldMetadata.name]: new FormControl(
-        fieldMetadata.defaultValue,
-        ...fieldMetadata.validators
+        fieldMetadata.defaultValue, [...fieldMetadata.validators]
       ),
     };
   }
@@ -69,3 +52,4 @@ export class ReactiveFormCardComponent implements OnInit {
     return formGroup;
   }
 }
+

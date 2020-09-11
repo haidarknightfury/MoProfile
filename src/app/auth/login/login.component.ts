@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginForm')
   private loginForm: NgForm;
 
-  private authState: Observable<AuthState>;
+  authState: Observable<AuthState>;
 
   constructor(private store: Store<{ auth: AuthState }>) {}
 
