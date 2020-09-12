@@ -1,6 +1,6 @@
 import { defaultState } from './../../shared/animation.shared';
-import { FieldMetadata } from './../../shared/model/common.model';
-import { Validators } from '@angular/forms';
+import { FieldMetadata, SubsectionMetadata } from './../../shared/model/common.model';
+import { Validators, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 
@@ -8,6 +8,20 @@ import { Injectable } from '@angular/core';
 export class BaseProfileContentService {
   
   constructor() {}
+
+
+  getSubsectionMetadata():SubsectionMetadata[] {
+    let  personal: FormGroup;
+     let personalFields: FieldMetadata[] = this.getPersonalFieldMeta();
+  
+     let work: FormGroup;
+     let workFields: FieldMetadata[] = this.getWorkFieldMeta();
+     
+     let personalSection: SubsectionMetadata = { heading: 'Personal details', subsection: personal, fields: personalFields};
+     let workSection : SubsectionMetadata = { heading: 'Work details', subsection: work, fields: workFields};
+
+     return [personalSection, workSection];
+  }
 
   getPersonalFieldMeta(): FieldMetadata[] {
     const emailFieldMetadata: FieldMetadata = {

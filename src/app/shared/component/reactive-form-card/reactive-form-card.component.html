@@ -12,7 +12,7 @@
         </div>
     
         <div class="btn-group col-md-1 m-0 p-0">
-            <button type="button" (click)="saveChanges()" class="btn btn-primary">Save</button>
+            <button [disabled]="subsection.invalid" type="button" (click)="saveChanges()" class="btn btn-primary">Save</button>
         </div>
         
     </div>

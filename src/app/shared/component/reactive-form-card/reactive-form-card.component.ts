@@ -1,7 +1,8 @@
-import { formEntryAnimation } from './../animation.shared';
-import { FieldMetadata } from './../model/common.model';
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { formEntryAnimation } from '../../animation.shared';
+import { FieldMetadata } from '../../model/common.model';
 
 @Component({
   selector: 'app-reactive-form-card',

@@ -1,13 +1,14 @@
 <form class="profile-content-form">
 
-   <app-reactive-form-card class="m-1" [heading]="'Personal details'" [fields]="personalFields" [subsection]="personal"
-      (onSave)="saveProfile($event)">
-   </app-reactive-form-card>
+   <ng-container *ngFor="let subsection of subsections">
+      
+      <app-reactive-form-card class="m-1" [heading]="subsection.heading" 
+                                          [fields]="subsection.fields" 
+                                          [subsection]="subsection.subsection"
+                                          (onSave)="saveProfile($event)">
+      </app-reactive-form-card>
 
-
-   <app-reactive-form-card class="m-1" [heading]="'Work details'" [fields]="workFields" [subsection]="work"
-      (onSave)="saveProfile($event)">
-   </app-reactive-form-card>
+   </ng-container> 
 
    <div class="button-group col-md-6 border p-2 m-2">
       <button class="btn btn-primary mx-1" type="button" (click)="saveProfile($event)">Save</button>

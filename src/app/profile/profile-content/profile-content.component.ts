@@ -1,5 +1,5 @@
 import { BaseProfileContentService } from './../service/profile-content.service';
-import { FieldMetadata } from './../../shared/model/common.model';
+import { FieldMetadata, SubsectionMetadata } from './../../shared/model/common.model';
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
@@ -16,13 +16,9 @@ import { Observable } from 'rxjs';
   providers: [BaseProfileContentService],
 })
 export class ProfileContentComponent implements OnInit {
-  public personal: FormGroup;
-  public personalFields: FieldMetadata[];
 
-  public work: FormGroup;
-  public workFields: FieldMetadata[];
+  public subsections: SubsectionMetadata[];
   public authState: Observable<AuthStore.AuthState>;
-
 
   constructor(
     private baseProfileContentService: BaseProfileContentService,
@@ -32,8 +28,7 @@ export class ProfileContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.authState = this.store.select('auth');
-    this.personalFields = this.baseProfileContentService.getPersonalFieldMeta();
-    this.workFields = this.baseProfileContentService.getWorkFieldMeta();
+    this.subsections = this.baseProfileContentService.getSubsectionMetadata();
   }
 
   saveProfile(event: any) {
@@ -41,7 +36,7 @@ export class ProfileContentComponent implements OnInit {
   }
 
   exit() {
-    this.store.dispatch(new AuthAction.Logout({}))
+    this.store.dispatch(new AuthAction.Logout({}));
     this.router.navigate(['/', 'auth', 'login']);
   }
 }
