@@ -18,6 +18,9 @@ export class ReactiveFormCardComponent implements OnInit {
   @Input('subsection')
   public subsection: FormGroup;
 
+  @Input('subsectionname')
+  public subsectionName: string;
+
   @Input('fields')
   public fields: FieldMetadata[];
 
@@ -33,8 +36,10 @@ export class ReactiveFormCardComponent implements OnInit {
   }
 
   saveChanges() {
-    console.log(`${JSON.stringify(this.subsection.value)}`)
-    this.onSave.emit(this.subsection.value);
+    const obj = {}
+    obj[this.subsectionName] = this.subsection.value;
+    console.log(`${JSON.stringify(obj)}`)
+    this.onSave.emit(obj);
   }
 
   createFormControl(fieldMetadata: FieldMetadata): any {

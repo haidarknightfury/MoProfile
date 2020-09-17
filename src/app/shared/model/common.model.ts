@@ -10,6 +10,7 @@ export interface FieldMetadata {
 }
 
 export interface SubsectionMetadata {
+  name: string,
   heading: string
   subsection: FormGroup;
   fields: FieldMetadata[];

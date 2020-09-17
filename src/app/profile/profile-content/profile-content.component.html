@@ -5,6 +5,7 @@
       <app-reactive-form-card class="m-1" [heading]="subsection.heading" 
                                           [fields]="subsection.fields" 
                                           [subsection]="subsection.subsection"
+                                          [subsectionname]="subsection.name"
                                           (onSave)="saveProfile($event)">
       </app-reactive-form-card>
 
@@ -12,12 +13,16 @@
 
    <div class="button-group col-md-6 border p-2 m-2">
       <button class="btn btn-primary mx-1" type="button" (click)="saveProfile($event)">Save</button>
-      <button class="btn btn-warning mx-1" type="button">Cancel</button>
+      <button class="btn btn-warning mx-1" type="button" (click)="resetProfile()">Reset</button>
       <button class="btn btn-info mx-1" type="button" (click)="exit()">Exit</button>
    </div>
 
    <pre>
        {{ (authState | async) | prettyprint }}
+    </pre>
+
+    <pre>
+       {{ (profileState| async) | prettyprint }}
     </pre>
 
 </form>

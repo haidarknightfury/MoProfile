@@ -4,9 +4,19 @@ import { ProfileContentComponent } from './profile-content/profile-content.compo
 import { ProfileRouting } from './profile.routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+
+import { profileReducer } from './store/profile.reducer';
 
 @NgModule({
   declarations: [ProfileContentComponent],
-  imports: [CommonModule, SharedModule, ProfileRouting, ReactiveFormsModule, FormsModule]
+  imports: [
+    CommonModule,
+    SharedModule,
+    ProfileRouting,
+    ReactiveFormsModule,
+    FormsModule,
+    StoreModule.forFeature('profile', profileReducer),
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}

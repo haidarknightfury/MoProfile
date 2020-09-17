@@ -17,8 +17,8 @@ export class BaseProfileContentService {
      let work: FormGroup;
      let workFields: FieldMetadata[] = this.getWorkFieldMeta();
      
-     let personalSection: SubsectionMetadata = { heading: 'Personal details', subsection: personal, fields: personalFields};
-     let workSection : SubsectionMetadata = { heading: 'Work details', subsection: work, fields: workFields};
+     let personalSection: SubsectionMetadata = {name: 'personal', heading: 'Personal details', subsection: personal, fields: personalFields};
+     let workSection : SubsectionMetadata = {name: 'work', heading: 'Work details', subsection: work, fields: workFields};
 
      return [personalSection, workSection];
   }
