@@ -1,23 +1,13 @@
+import { Profile } from './../service/profile-content.service';
+import { AppState } from './../../shared/state/app.state';
 import * as ProfileAction from './profile.action';
 import { AuthState } from 'src/app/auth/store/auth.reducer';
 
-
-export interface AppState {
-    auth: AuthState
-}
 export interface ProfileState extends AppState {
-        profile: State
+  profile: State;
 }
-export interface State {
-    personal : {
-        email: string;
-        firstName: string;
-        lastName: string;
-    };
-    work :{
-        company: string;
-    }
-}
+
+export interface State extends Profile {}
 
 const initialState: State = {
   personal: {
@@ -30,13 +20,16 @@ const initialState: State = {
   },
 };
 
-export function profileReducer(state: State = initialState, action:ProfileAction.ProfileAction ) {
-  switch(action.type){
-      case ProfileAction.UPDATE_SECTION:
-          return { ...state, ...action.payload };
-      case ProfileAction.RESET_SECTION:
-          return {...initialState};
-      default:
-          return state;
-  }  
+export function profileReducer(
+  state: State = initialState,
+  action: ProfileAction.ProfileAction
+) {
+  switch (action.type) {
+    case ProfileAction.UPDATE_SECTION:
+      return { ...state, ...action.payload };
+    case ProfileAction.RESET_SECTION:
+      return { ...initialState };
+    default:
+      return state;
+  }
 }

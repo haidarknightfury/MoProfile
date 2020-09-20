@@ -4,13 +4,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrettyprintPipe } from './pipe/prettyprint.pipe';
-
+import { BreadcrumbComponent } from './component/breadcrumb/breadcrumb.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [ReactiveFormCardComponent, PrettyprintPipe],
-  imports: [
-    CommonModule, FormsModule, ReactiveFormsModule
+  declarations: [
+    ReactiveFormCardComponent,
+    PrettyprintPipe,
+    BreadcrumbComponent,
   ],
-  exports: [ReactiveFormCardComponent, PrettyprintPipe]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  exports: [ReactiveFormCardComponent, PrettyprintPipe],
 })
-export class SharedModule { }
+export class SharedModule {}

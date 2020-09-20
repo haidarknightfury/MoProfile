@@ -1,3 +1,4 @@
+import { EffectsModule } from '@ngrx/effects';
 import { AuthRoutingModule } from './auth.routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,7 @@ import { AuthReducer } from './store/auth.reducer';
     FormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({ auth: AuthReducer }),
+    EffectsModule.forRoot(),
   ],
 })
 export class AuthModule {}

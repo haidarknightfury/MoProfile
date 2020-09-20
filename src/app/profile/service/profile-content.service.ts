@@ -1,26 +1,49 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { defaultState } from './../../shared/animation.shared';
-import { FieldMetadata, SubsectionMetadata } from './../../shared/model/common.model';
+import {
+  FieldMetadata,
+  SubsectionMetadata,
+} from './../../shared/model/common.model';
 import { Validators, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { ProfileState } from '../store/profile.reducer';
 
+export interface Profile {
+  personal: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
+  work: {
+    company: string;
+  };
+}
 
 @Injectable()
 export class BaseProfileContentService {
-  
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
+  getSubsectionMetadata(): SubsectionMetadata[] {
+    let personal: FormGroup;
+    let personalFields: FieldMetadata[] = this.getPersonalFieldMeta();
 
-  getSubsectionMetadata():SubsectionMetadata[] {
-    let  personal: FormGroup;
-     let personalFields: FieldMetadata[] = this.getPersonalFieldMeta();
-  
-     let work: FormGroup;
-     let workFields: FieldMetadata[] = this.getWorkFieldMeta();
-     
-     let personalSection: SubsectionMetadata = {name: 'personal', heading: 'Personal details', subsection: personal, fields: personalFields};
-     let workSection : SubsectionMetadata = {name: 'work', heading: 'Work details', subsection: work, fields: workFields};
+    let work: FormGroup;
+    let workFields: FieldMetadata[] = this.getWorkFieldMeta();
 
-     return [personalSection, workSection];
+    let personalSection: SubsectionMetadata = {
+      name: 'personal',
+      heading: 'Personal details',
+      subsection: personal,
+      fields: personalFields,
+    };
+    let workSection: SubsectionMetadata = {
+      name: 'work',
+      heading: 'Work details',
+      subsection: work,
+      fields: workFields,
+    };
+
+    return [personalSection, workSection];
   }
 
   getPersonalFieldMeta(): FieldMetadata[] {
@@ -42,7 +65,6 @@ export class BaseProfileContentService {
       validators: [Validators.required],
     };
 
-    
     const lNameFieldMetadata: FieldMetadata = {
       name: 'lastName',
       defaultValue: '',
@@ -53,7 +75,6 @@ export class BaseProfileContentService {
     };
     return [emailFieldMetadata, fNameFieldMetadata, lNameFieldMetadata];
   }
-
 
   getWorkFieldMeta(): FieldMetadata[] {
     const companyName: FieldMetadata = {
@@ -68,5 +89,7 @@ export class BaseProfileContentService {
     return [companyName];
   }
 
-
+  updateProfile(profile: Profile) {
+    return this.http.post('http:localhost:8081/profile', profile);
+  }
 }
