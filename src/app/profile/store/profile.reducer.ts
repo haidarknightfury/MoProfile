@@ -14,6 +14,7 @@ const initialState: State = {
     email: '',
     firstName: '',
     lastName: '',
+    gender: 'Male',
   },
   work: {
     company: '',

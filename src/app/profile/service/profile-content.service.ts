@@ -7,21 +7,36 @@ import {
 import { Validators, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { ProfileState } from '../store/profile.reducer';
+import { throwError, Subject } from 'rxjs';
+import { retry, catchError, tap,  } from 'rxjs/operators';
 
 export interface Profile {
   personal: {
     email: string;
     firstName: string;
     lastName: string;
+    gender: string;
   };
   work: {
     company: string;
   };
 }
 
+const API_URL = 'http://localhost:8081';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
+
 @Injectable()
 export class BaseProfileContentService {
+
+
   constructor(private http: HttpClient) {}
+
+  public profileUpdated: Subject<Profile> = new Subject();
 
   getSubsectionMetadata(): SubsectionMetadata[] {
     let personal: FormGroup;
@@ -90,6 +105,20 @@ export class BaseProfileContentService {
   }
 
   updateProfile(profile: Profile) {
-    return this.http.post('http:localhost:8081/profile', profile);
+    return this.http.post(`${API_URL}/profile`, profile, httpOptions)
+                    .pipe(
+                         retry(1), 
+                         tap ((response:Profile)=> this.profileUpdated.next(response)),
+                         catchError(this.handleError));
+  }
+
+  handleError(error) {
+    let errorMessage = '';
+    errorMessage =
+      error.error instanceof ErrorEvent
+        ? error.error.message
+        : `Error Code: ${error.status}\nMessage: ${error.message}`;
+    window.alert(errorMessage);
+    return throwError(errorMessage);
   }
 }

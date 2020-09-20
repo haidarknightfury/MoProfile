@@ -26,7 +26,13 @@ export class ProfileEffect {
                 return { ...profile, ...action.payload }
           }));
       }),
-      map((payload)=> { console.log(payload); return payload })
+      map((payload)=> { 
+         console.log(payload);
+         this.profileService.updateProfile(payload).pipe(
+             map((response)=> {console.log(response); return response; })
+         ).subscribe(console.log); 
+        }
+      )
   )
 
 }
