@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     console.log(this.loginForm.value);
-    this.store.dispatch(new fromAuth.Login('123456'));
-    this.router.navigate(['/','profile']);
+    this.store.dispatch(new fromAuth.TryLogin(this.loginForm.value));
   }
 }

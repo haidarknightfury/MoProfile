@@ -40,22 +40,19 @@ export class BaseProfileContentService {
 
   getSubsectionMetadata(): SubsectionMetadata[] {
     let personal: FormGroup;
-    let personalFields: FieldMetadata[] = this.getPersonalFieldMeta();
-
     let work: FormGroup;
-    let workFields: FieldMetadata[] = this.getWorkFieldMeta();
-
+    
     let personalSection: SubsectionMetadata = {
       name: 'personal',
       heading: 'Personal details',
       subsection: personal,
-      fields: personalFields,
+      fields: this.getPersonalFieldMeta(),
     };
     let workSection: SubsectionMetadata = {
       name: 'work',
       heading: 'Work details',
       subsection: work,
-      fields: workFields,
+      fields: this.getWorkFieldMeta(),
     };
 
     return [personalSection, workSection];
@@ -88,7 +85,17 @@ export class BaseProfileContentService {
       type: 'text',
       validators: [Validators.required],
     };
-    return [emailFieldMetadata, fNameFieldMetadata, lNameFieldMetadata];
+
+    const genderFieldMetadata : FieldMetadata = {
+      name: 'gender',
+      defaultValue: 'Male',
+      id: 'txtGender',
+      label: 'Gender',
+      type: 'text',
+      validators: [],
+    }
+
+    return [fNameFieldMetadata, lNameFieldMetadata, genderFieldMetadata, emailFieldMetadata];
   }
 
   getWorkFieldMeta(): FieldMetadata[] {
@@ -114,10 +121,7 @@ export class BaseProfileContentService {
 
   handleError(error) {
     let errorMessage = '';
-    errorMessage =
-      error.error instanceof ErrorEvent
-        ? error.error.message
-        : `Error Code: ${error.status}\nMessage: ${error.message}`;
+    errorMessage = error.error instanceof ErrorEvent ? error.error.message : `Error Code: ${error.status}\nMessage: ${error.message}`;
     window.alert(errorMessage);
     return throwError(errorMessage);
   }

@@ -16,7 +16,7 @@ export function AuthReducer(
 ) {
   switch (action.type) {
     case AuthAction.TRY_LOGIN:
-      return { ...state, loggedIn: true };
+      return { ...state, loggedIn: false };
     case AuthAction.LOGIN:
       return { ...state, loggedIn: true, jwtToken: action.payload };
     case AuthAction.LOGOUT:

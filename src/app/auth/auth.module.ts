@@ -1,3 +1,5 @@
+import { AuthEffects } from './store/auth.effects';
+import { AuthService } from './service/auth.service';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthRoutingModule } from './auth.routing.module';
 import { NgModule } from '@angular/core';
@@ -18,7 +20,8 @@ import { AuthReducer } from './store/auth.reducer';
     FormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({ auth: AuthReducer }),
-    EffectsModule.forRoot(),
+    EffectsModule.forRoot([AuthEffects]),
   ],
+  providers: [AuthService]
 })
 export class AuthModule {}
