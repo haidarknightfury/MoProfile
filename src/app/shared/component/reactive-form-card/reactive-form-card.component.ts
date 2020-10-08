@@ -30,8 +30,8 @@ export class ReactiveFormCardComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(`received fields:  `+ this.fields)
-    const createdFields = this.createFields(this.fields);
-    this.subsection = new FormGroup(createdFields);
+    // const createdFields = this.createFields(this.fields);
+    // this.subsection = new FormGroup(createdFields);
 
   }
 
