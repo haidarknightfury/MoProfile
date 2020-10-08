@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { defaultState } from './../../shared/animation.shared';
-import {
-  FieldMetadata,
-  SubsectionMetadata,
-} from './../../shared/model/common.model';
+import { FieldMetadata, SubsectionMetadata} from './../../shared/model/common.model';
 import { Validators, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { ProfileState } from '../store/profile.reducer';
-import { throwError, Subject } from 'rxjs';
+import { throwError, Subject, Observable } from 'rxjs';
 import { retry, catchError, tap,  } from 'rxjs/operators';
 
+const API_URL = 'http://localhost:8081';
+
 export interface Profile {
+  username: string;
   personal: {
     email: string;
     firstName: string;
@@ -21,8 +21,6 @@ export interface Profile {
     company: string;
   };
 }
-
-const API_URL = 'http://localhost:8081';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -94,7 +92,6 @@ export class BaseProfileContentService {
       type: 'text',
       validators: [],
     }
-
     return [fNameFieldMetadata, lNameFieldMetadata, genderFieldMetadata, emailFieldMetadata];
   }
 
@@ -118,6 +115,11 @@ export class BaseProfileContentService {
                          tap ((response:Profile)=> this.profileUpdated.next(response)),
                          catchError(this.handleError));
   }
+
+  fetchProfile(): Observable <Profile> {
+    return this.http.get<Profile>(`${API_URL}/profile`, httpOptions);
+  }
+
 
   handleError(error) {
     let errorMessage = '';

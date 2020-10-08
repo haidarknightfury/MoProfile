@@ -14,7 +14,7 @@ import * as AuthStore from '../../auth/store/auth.reducer';
 import * as AuthAction from '../../auth/store/auth.action';
 import { Observable, interval, of, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, take, mergeMap } from 'rxjs/operators';
-import { ProfileState } from '../store/profile.reducer';
+import * as ProfileStore from '../store/profile.reducer';
 import * as ProfileAction from '../store/profile.action';
 
 @Component({
@@ -25,13 +25,13 @@ import * as ProfileAction from '../store/profile.action';
 export class ProfileContentComponent implements OnInit {
   public subsections: SubsectionMetadata[];
   public authState: Observable<AuthStore.AuthState>;
-  public profileState: Observable<any>;
+  public profileState: Observable<ProfileStore.State>;
   public letters$ = new BehaviorSubject("Y");;
 
   constructor(
     private baseProfileContentService: BaseProfileContentService,
     private router: Router,
-    private store: Store<ProfileState>,
+    private store: Store<ProfileStore.ProfileState>,
   ) {}
 
   ngOnInit(): void {
@@ -41,9 +41,11 @@ export class ProfileContentComponent implements OnInit {
 
     this.baseProfileContentService.profileUpdated.subscribe((response)=>{
       console.log('updated'+ response);
-    })
+    });
 
+    this.store.dispatch(new ProfileAction.FetchSection({}));
   }
+
 
   saveProfile(event: any) {
     console.info(event);

@@ -10,6 +10,7 @@ export interface ProfileState extends AppState {
 export interface State extends Profile {}
 
 const initialState: State = {
+  username: '',
   personal: {
     email: '',
     firstName: '',
@@ -21,12 +22,10 @@ const initialState: State = {
   },
 };
 
-export function profileReducer(
-  state: State = initialState,
-  action: ProfileAction.ProfileAction
-) {
+export function profileReducer(state: State = initialState, action: ProfileAction.ProfileAction) {
   switch (action.type) {
     case ProfileAction.UPDATE_SECTION:
+    case ProfileAction.SECTION_RETRIEVED:  
       return { ...state, ...action.payload };
     case ProfileAction.RESET_SECTION:
       return { ...initialState };

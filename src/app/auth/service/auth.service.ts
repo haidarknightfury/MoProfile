@@ -11,7 +11,6 @@ export interface LoginResponse {
   roles: string[];
 }
 
-
 const API_URL = 'http://localhost:8081';
 
 const httpOptions = {

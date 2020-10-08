@@ -1,3 +1,4 @@
+import { ProfileResolver } from './resolvers/profile.resolver';
 import { ProfileEffect } from './store/profile.effects';
 import { Effect, EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
@@ -22,6 +23,6 @@ import { BaseProfileContentService } from './service/profile-content.service';
     StoreModule.forFeature('profile', profileReducer),
     EffectsModule.forFeature([ProfileEffect])
   ],
-  providers: [BaseProfileContentService]
+  providers: [BaseProfileContentService, ProfileResolver]
 })
 export class ProfileModule {}

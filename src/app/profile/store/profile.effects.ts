@@ -11,7 +11,6 @@ import { BaseProfileContentService } from '../service/profile-content.service';
 @Injectable()
 export class ProfileEffect {
   constructor(private action$: Actions,
-              private router: Router,
               private profileService: BaseProfileContentService,
               private store: Store<ProfileState>) {}
 
@@ -26,6 +25,13 @@ export class ProfileEffect {
                 return { ...profile, ...action.payload }
           }));
       }),
+      switchMap((profile)=> { 
+        const auth$ = this.store.select('auth');
+        return auth$.pipe((take(1), map((authState)=>{
+            const userProfile = profile;
+            return userProfile;
+        })))
+      }),
       map((payload)=> { 
          console.log(payload);
          this.profileService.updateProfile(payload).pipe(
@@ -33,6 +39,19 @@ export class ProfileEffect {
          ).subscribe(console.log); 
         }
       )
-  )
+  );
 
+
+
+  @Effect({dispatch: true})
+  fetchProfileEffect = this.action$.pipe(
+    ofType(ProfileAction.FETCH_SECTION),
+    switchMap((_) => this.profileService.fetchProfile()),
+    map((profile)=> { 
+        return { 
+           type: ProfileAction.SECTION_RETRIEVED,
+           payload: profile
+        }
+      })
+  );
 }

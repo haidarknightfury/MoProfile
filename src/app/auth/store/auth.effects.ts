@@ -21,8 +21,7 @@ export class AuthEffects {
       this.authService.login(authData)
     ),
     mergeMap((loginResponse: LoginResponse) => {
-      return loginResponse.jwtToken
-        ? [
+      return loginResponse.jwtToken? [
             {
               type: AuthActions.LOGIN,
               payload: loginResponse.jwtToken,
