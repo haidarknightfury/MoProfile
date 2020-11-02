@@ -16,6 +16,8 @@ const initialState: State = {
     firstName: '',
     lastName: '',
     gender: 'Male',
+    title: '',
+    dateOfBirth: new Date()
   },
   work: {
     company: '',

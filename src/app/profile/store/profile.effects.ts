@@ -33,7 +33,6 @@ export class ProfileEffect {
         })))
       }),
       map((payload)=> { 
-         console.log(payload);
          this.profileService.updateProfile(payload).pipe(
              map((response)=> {console.log(response); return response; })
          ).subscribe(console.log); 

@@ -12,10 +12,12 @@ const API_URL = 'http://localhost:8081';
 export interface Profile {
   username: string;
   personal: {
-    email: string;
     firstName: string;
     lastName: string;
     gender: string;
+    title: string;
+    dateOfBirth: Date;
+    email: string;
   };
   work: {
     company: string;
@@ -62,7 +64,7 @@ export class BaseProfileContentService {
       defaultValue: '',
       id: 'txtEmail',
       label: 'Email address',
-      type: 'email',
+      type: 'text',
       validators: [Validators.required, Validators.email],
     };
 
@@ -74,6 +76,16 @@ export class BaseProfileContentService {
       type: 'text',
       validators: [Validators.required],
     };
+
+    const titleFieldMetadata: FieldMetadata = {
+      name: 'title',
+      defaultValue: '',
+      id: 'title',
+      label: 'Title',
+      type: 'text',
+      validators: [Validators.required],
+    };
+
 
     const lNameFieldMetadata: FieldMetadata = {
       name: 'lastName',
@@ -92,7 +104,7 @@ export class BaseProfileContentService {
       type: 'text',
       validators: [],
     }
-    return [fNameFieldMetadata, lNameFieldMetadata, genderFieldMetadata, emailFieldMetadata];
+    return [fNameFieldMetadata, lNameFieldMetadata, titleFieldMetadata, genderFieldMetadata, emailFieldMetadata];
   }
 
   getWorkFieldMeta(): FieldMetadata[] {
@@ -111,7 +123,6 @@ export class BaseProfileContentService {
   updateProfile(profile: Profile) {
     return this.http.post(`${API_URL}/profile`, profile, httpOptions)
                     .pipe(
-                         retry(1), 
                          tap ((response:Profile)=> this.profileUpdated.next(response)),
                          catchError(this.handleError));
   }
