@@ -64,7 +64,7 @@ export class ProfileContentComponent implements OnInit {
   }
 
   saveProfile(event: any) {
-    console.info(event);
+    console.info(`dispatching update action`);
     this.store.dispatch(new ProfileAction.UpdatePersonalAction(event));
   }
 

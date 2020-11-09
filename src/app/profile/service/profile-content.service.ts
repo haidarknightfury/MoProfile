@@ -121,10 +121,10 @@ export class BaseProfileContentService {
   }
 
   updateProfile(profile: Profile) {
+    console.log(`update happening in content service`);
     return this.http.post(`${API_URL}/profile`, profile, httpOptions)
-                    .pipe(
-                         tap ((response:Profile)=> this.profileUpdated.next(response)),
-                         catchError(this.handleError));
+                    .pipe(tap ((response:Profile)=> this.profileUpdated.next(response)),
+                          catchError(this.handleError));
   }
 
   fetchProfile(): Observable <Profile> {

@@ -23,6 +23,6 @@ import { BaseProfileContentService } from './service/profile-content.service';
     StoreModule.forFeature('profile', profileReducer),
     EffectsModule.forFeature([ProfileEffect])
   ],
-  providers: [BaseProfileContentService, ProfileResolver]
+  providers: [BaseProfileContentService, ProfileResolver] // services
 })
 export class ProfileModule {}

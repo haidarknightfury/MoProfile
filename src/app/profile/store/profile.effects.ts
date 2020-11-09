@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import * as ProfileAction from './profile.action';
 import { ProfileState } from './profile.reducer';
 import { HttpClient } from '@angular/common/http';
@@ -15,32 +15,24 @@ export class ProfileEffect {
               private store: Store<ProfileState>) {}
 
 
-
   @Effect({dispatch: false})
   updateProfileEffect = this.action$.pipe(
       ofType(ProfileAction.UPDATE_SECTION),
-      switchMap((action: ProfileAction.UpdatePersonalAction)=> {
+      switchMap((action: ProfileAction.UpdatePersonalAction) => {
+          console.log('starting update of profile in profile effects');
           const profile$ = this.store.select('profile');
           return profile$.pipe(take(1) , map((profile) => {
                 return { ...profile, ...action.payload }
           }));
       }),
-      switchMap((profile)=> { 
-        const auth$ = this.store.select('auth');
-        return auth$.pipe((take(1), map((authState)=>{
-            const userProfile = profile;
-            return userProfile;
-        })))
-      }),
-      map((payload)=> { 
+      withLatestFrom(this.store.select('auth')),
+      map(([payload, auth])=> { 
          this.profileService.updateProfile(payload).pipe(
-             map((response)=> {console.log(response); return response; })
+             map((response)=> {console.log(`updating profile ${response.username}`); return response; })
          ).subscribe(console.log); 
         }
       )
   );
-
-
 
   @Effect({dispatch: true})
   fetchProfileEffect = this.action$.pipe(
