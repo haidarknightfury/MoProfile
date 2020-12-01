@@ -132,7 +132,7 @@ export class BaseProfileContentService {
   }
 
 
-  handleError(error) {
+  handleError(error:any) {
     let errorMessage = '';
     errorMessage = error.error instanceof ErrorEvent ? error.error.message : `Error Code: ${error.status}\nMessage: ${error.message}`;
     window.alert(errorMessage);
